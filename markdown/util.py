@@ -180,12 +180,12 @@ class HtmlStash:
 
     def __init__(self):
         """ Create a HtmlStash. """
-        self.html_counter = 0  # for counting inline html segments
-        self.rawHtmlBlocks = []
-        self.tag_counter = 0
+        self.html_counter: int = 0  # for counting inline html segments
+        self.rawHtmlBlocks: list[str] = []
+        self.tag_counter: int = 0
         self.tag_data = []  # list of dictionaries in the order tags appear
 
-    def store(self, html):
+    def store(self, html: str) -> str:
         """
         Saves an HTML segment for later reinsertion.  Returns a
         placeholder string that needs to be inserted into the
@@ -266,12 +266,12 @@ class Registry:
     an item using that item's assigned "name".
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._data = {}
         self._priority = []
         self._is_sorted = False
 
-    def __contains__(self, item):
+    def __contains__(self, item: object) -> bool:
         if isinstance(item, str):
             # Check if an item exists by this name.
             return item in self._data.keys()
@@ -293,13 +293,13 @@ class Registry:
             return self._data[self._priority[key].name]
         return self._data[key]
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._priority)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '<{}({})>'.format(self.__class__.__name__, list(self))
 
-    def get_index_for_name(self, name):
+    def get_index_for_name(self, name: str) -> int:
         """
         Return the index of the given name.
         """
@@ -333,7 +333,7 @@ class Registry:
         self._data[name] = item
         self._priority.append(_PriorityItem(name, priority))
 
-    def deregister(self, name, strict=True):
+    def deregister(self, name: str, strict: bool = True) -> None:
         """
         Remove an item from the registry.
 
@@ -347,7 +347,7 @@ class Registry:
             if strict:
                 raise
 
-    def _sort(self):
+    def _sort(self) -> None:
         """
         Sort the registry by priority from highest to lowest.
 
